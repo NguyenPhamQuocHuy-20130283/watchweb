@@ -1,0 +1,524 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss/theme";
+@import "tailwindcss/utilities";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  user-select: none;
+  outline-color: tomato;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #f5f5f5;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: tomato;
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #616161;
+}
+
+/* Navbar Styles */
+.nav_items {
+  padding-bottom: 1rem;
+  position: relative;
+}
+
+.nav_items:hover > span {
+  width: 100%;
+}
+
+.category_nav_item:hover .categoriesItem {
+  display: grid;
+}
+
+.men_nav_item:hover .hoveredItems,
+.women_nav_item:hover .hoveredItems,
+.jewelry_nav_item:hover .hoveredItems,
+.perfume_nav_item:hover .hoveredItems {
+  display: flex;
+}
+
+.categoriesItem {
+  width: 70rem;
+  left: -13.5rem;
+  animation: hoverAnimation 0.3s ease-in-out forwards;
+}
+
+.hoveredItems {
+  z-index: 10;
+  animation: hoverAnimation 0.3s ease-in-out forwards;
+}
+
+.desktopNavbar a:hover {
+  color: tomato;
+}
+
+@keyframes hoverAnimation {
+  from {
+    transform: translateY(2rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .desktopNavbarUl {
+    gap: 2rem !important;
+  }
+  .categoriesItem {
+    width: 60rem !important;
+    left: -10.5rem;
+  }
+}
+
+/* Details/Summary Styles */
+details {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+details a {
+  margin: 0.3rem;
+  margin-top: 1rem;
+  color: #899098;
+  display: block;
+}
+
+details a:hover {
+  color: tomato;
+}
+
+details > summary {
+  direction: rtl;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 0.5rem 0;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details > summary::before {
+  content: "+ ";
+  margin-left: 0.5rem;
+}
+
+details[open] > summary::before {
+  content: "- ";
+}
+
+details[open] > summary {
+  margin-bottom: 0.5rem;
+}
+
+/* Mobile Navbar Animation */
+@keyframes mobileNavbar {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes newspaper {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Swiper Styles */
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-scrollbar-drag,
+.swiper-scrollbar {
+  background-color: transparent !important;
+}
+
+.swiper:hover .swiper-scrollbar {
+  background-color: #f776569c !important;
+}
+
+.swiper:hover .swiper-scrollbar-drag {
+  background-color: tomato !important;
+}
+
+@media screen and (max-width: 1100px) {
+  .swiper {
+    height: 40vh;
+  }
+}
+
+/* Aside Section Scrollbar */
+.aside_section::-webkit-scrollbar {
+  width: 0.3rem !important;
+  display: block;
+}
+
+.aside_section::-webkit-scrollbar-button {
+  height: 5rem !important;
+  background-color: transparent;
+}
+
+.aside_section::-webkit-scrollbar-track {
+  border-radius: 0.5rem;
+  background-color: transparent;
+}
+
+.aside_section::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.aside_section:hover::-webkit-scrollbar-track {
+  background-color: #616161 !important;
+}
+
+.aside_section:hover::-webkit-scrollbar-thumb {
+  background-color: tomato !important;
+}
+
+/* Product Hover Effects */
+.product_hover_pic {
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.product_pic:hover .product_hover_pic {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.productOptions {
+  animation: productopt 0.2s ease-out forwards;
+}
+
+.product_pic:hover .productOptions {
+  display: flex !important;
+}
+
+@keyframes productopt {
+  from {
+    transform: translateX(2rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Footer Styles */
+hr {
+  border-color: rgba(116, 116, 116, 0.733) !important;
+  border-width: 1px;
+}
+
+hr.title {
+  border-color: tomato !important;
+  border-width: 2px;
+}
+
+footer a:hover {
+  color: tomato;
+}
+
+/* Utility Classes */
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+/* Mobile Bottom Navigation */
+@media screen and (max-width: 1024px) {
+  body {
+    padding-bottom: 80px;
+  }
+}
+
+/* Loading Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+/* Button Hover Effects */
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Card Shadows */
+.card-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.card-shadow:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Text Selection */
+::selection {
+  background-color: tomato;
+  color: white;
+}
+
+::-moz-selection {
+  background-color: tomato;
+  color: white;
+}
+
+/* Focus Styles */
+*:focus-visible {
+  outline: 2px solid tomato;
+  outline-offset: 2px;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent Horizontal Scroll */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Star Rating */
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+/* Price Styles */
+strong {
+  font-weight: 700;
+}
+
+s {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* Mobile Navigation Fix */
+.mobile-nav-spacer {
+  height: 80px;
+}
+
+/* Image Lazy Loading */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* Grid Gap Fix */
+.grid {
+  gap: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .grid {
+    gap: 1.5rem;
+  }
+}
+
+/* Responsive Typography */
+@media screen and (max-width: 640px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Loading Skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1rem;
+  height: 1rem;
+  padding: 0 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 9999px;
+}
+
+/* Dropdown Animation */
+.dropdown-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.dropdown-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.2s ease-out;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Responsive Container */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
