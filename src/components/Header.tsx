@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { Heart, ShoppingCart, User } from 'lucide-react';
 
 export default function Header() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -16,8 +17,8 @@ export default function Header() {
     <>
       <header className="header w-full">
         {/* Top Header */}
-        <div className="top-header w-screen flex flex-col items-center justify-between border-b">
-          <div className="flex w-full items-center justify-between p-4 md:px-20 border-b">
+        <div className="top-header w-screen flex flex-col items-center justify-between border-b border-gray-300">
+          <div className="flex w-full items-center justify-between p-4 md:px-20 border-b border-gray-300">
             <div className="icons hidden lg:flex items-center gap-2">
               <Link href="#" className="text-gray-700 bg-gray-300/50 p-1 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center transition-all">
                 <span className="text-xl">📷</span>
@@ -52,21 +53,22 @@ export default function Header() {
                 placeholder="Enter Your Product Name..."
                 type="text"
               />
-              <label className="absolute right-2 top-2">
-                <span className="cursor-pointer">🔍</span>
-              </label>
             </form>
-            <div className="icons hidden mr-2 text-3xl md:flex gap-8 text-gray-600">
-              <div className="relative cursor-pointer">
-                <span>👤</span>
+            <div className="icons hidden mr-2 text-3xl md:flex gap-6 text-gray-600">
+              <div className="relative cursor-pointer hover:bg-gray-300 p-1 rounded-full transition-all">
+                <span>
+                  <User size={35}/>
+                </span>
               </div>
-              <div className="relative cursor-pointer">
+              <div className="relative cursor-pointer hover:bg-gray-300 p-1 rounded-full transition-all">
                 <span className="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full">0</span>
-                <span>❤️</span>
+                <span>
+                  <Heart size={35}/>
+                </span>
               </div>
-              <div className="relative cursor-pointer">
+              <div className="relative cursor-pointer hover:bg-gray-300 p-1 rounded-full transition-all">
                 <span className="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full">0</span>
-                <span>🛍️</span>
+                <span><ShoppingCart size={35}/></span>
               </div>
             </div>
           </div>
@@ -80,25 +82,110 @@ export default function Header() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
             </li>
             <li className="nav_items relative category_nav_item">
-              <Link href="#Categories">CATEGORIES</Link>
+              <a href="#Categories">CATEGORIES</a>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
+
+              <ul
+                className="categoriesItem absolute top-10 shadow-lg rounded-xl hidden grid-cols-4 p-4 gap-4 border text-gray-400 font-normal bg-white z-10"
+              >
+                <li>
+                  <h3 className="border-b py-2 mb-4 text-gray-900 font-semibold">
+                    Electronics
+                  </h3>
+                  <ul className="flex flex-col items-start justify-start gap-2">
+                    <li><a href="#">Desktop</a></li>
+                    <li><a href="#">Laptop</a></li>
+                    <li><a href="#">Camera</a></li>
+                    <li><a href="#">Tablet</a></li>
+                    <li><a href="#">Headphone</a></li>
+                    <li><img src="/images/electronics-banner-1.jpg" alt="pic" /></li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h3 className="border-b py-2 mb-4 text-gray-900 font-semibold">Men's</h3>
+                  <ul className="flex flex-col items-start justify-start gap-2">
+                    <li><a href="#">Formal</a></li>
+                    <li><a href="#">Casual</a></li>
+                    <li><a href="#">Sports</a></li>
+                    <li><a href="#">Jacket</a></li>
+                    <li><a href="#">Sunglasses</a></li>
+                    <li><img src="/images/electronics-banner-2.jpg" alt="pic" /></li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h3 className="border-b py-2 mb-4 text-gray-900 font-semibold">Women's</h3>
+                  <ul className="flex flex-col items-start justify-start gap-2">
+                    <li><a href="#">Formal</a></li>
+                    <li><a href="#">Casual</a></li>
+                    <li><a href="#">Perfume</a></li>
+                    <li><a href="#">Cosmetics</a></li>
+                    <li><a href="#">Bags</a></li>
+                    <li><img src="/images/mens-banner.jpg" alt="pic" /></li>
+                  </ul>
+                </li>
+
+                <li>
+                  <h3 className="border-b py-2 mb-4 text-gray-900 font-semibold">Electronics</h3>
+                  <ul className="flex flex-col items-start justify-start gap-2">
+                    <li><a href="#">Smart Watch</a></li>
+                    <li><a href="#">Smart TV</a></li>
+                    <li><a href="#">Keyboard</a></li>
+                    <li><a href="#">Mouse</a></li>
+                    <li><a href="#">Microphone</a></li>
+                    <li><img src="/images/womens-banner.jpg" alt="pic" /></li>
+                  </ul>
+                </li>
+              </ul>
             </li>
-            <li className="nav_items relative">
-              <Link href="#Men">MEN&apos;S</Link>
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
-            </li>
-            <li className="nav_items relative">
-              <Link href="#Women">WOMEN&apos;S</Link>
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
-            </li>
-            <li className="nav_items relative">
-              <Link href="#Jewelry">JEWELRY</Link>
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
-            </li>
-            <li className="nav_items relative">
-              <Link href="#Perfume">PERFUME</Link>
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
-            </li>
+{/* Men’s dropdown */}
+<li className="nav_items relative men_nav_item">
+  <Link href="#Men">MEN&apos;S</Link>
+  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
+  <ul className="hoveredItems hidden absolute top-10 bg-white shadow-lg rounded-xl flex-col p-4 gap-2 text-gray-400 w-48">
+    <li><Link href="#">Shirts</Link></li>
+    <li><Link href="#">Shorts & Jeans</Link></li>
+    <li><Link href="#">Safety Shoes</Link></li>
+    <li><Link href="#">Wallet</Link></li>
+  </ul>
+</li>
+
+{/* Women’s dropdown */}
+<li className="nav_items relative women_nav_item">
+  <Link href="#Women">WOMEN&apos;S</Link>
+  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
+  <ul className="hoveredItems hidden absolute top-10 bg-white shadow-lg rounded-xl flex-col p-4 gap-2 text-gray-400 w-48">
+    <li><Link href="#">Dress & Frock</Link></li>
+    <li><Link href="#">Earrings</Link></li>
+    <li><Link href="#">Necklace</Link></li>
+    <li><Link href="#">Makeup Kit</Link></li>
+  </ul>
+</li>
+
+{/* Jewelry dropdown */}
+<li className="nav_items relative jewelry_nav_item">
+  <Link href="#Jewelry">JEWELRY</Link>
+  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
+  <ul className="hoveredItems hidden absolute top-10 bg-white shadow-lg rounded-xl flex-col p-4 gap-2 text-gray-400 w-48">
+    <li><Link href="#">Earrings</Link></li>
+    <li><Link href="#">Couple Rings</Link></li>
+    <li><Link href="#">Necklace</Link></li>
+    <li><Link href="#">Bracelets</Link></li>
+  </ul>
+</li>
+
+{/* Perfume dropdown */}
+<li className="nav_items relative perfume_nav_item">
+  <Link href="#Perfume">PERFUME</Link>
+  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
+  <ul className="hoveredItems hidden absolute top-10 bg-white shadow-lg rounded-xl flex-col p-4 gap-2 text-gray-400 w-48">
+    <li><Link href="#">Clothes Perfume</Link></li>
+    <li><Link href="#">Deodorant</Link></li>
+    <li><Link href="#">Flower Fragrance</Link></li>
+    <li><Link href="#">Air Freshener</Link></li>
+  </ul>
+</li>
             <li className="nav_items relative">
               <Link href="#Blog">BLOG</Link>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>

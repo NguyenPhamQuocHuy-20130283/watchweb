@@ -58,7 +58,7 @@ export default function Home() {
 
             {/* New Products */}
             <div className="newProductsContainer mb-10">
-              <h1 className="font-semibold text-xl border-b py-4 mb-6">New Products</h1>
+              <h1 className="font-semibold text-xl border-b py-4 mb-6 text-center">New Products</h1>
               <div className="newProducts grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {newProducts.map((product, index) => (
                   <ProductCard key={index} product={product} />
