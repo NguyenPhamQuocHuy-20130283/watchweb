@@ -1,13 +1,17 @@
-import Header from '@/components/Header';
-import HeroSwiper from '@/components/HeroSwiper';
-import CategoriesSwiper from '@/components/CategoriesSwiper';
-import ProductCard from '@/components/ProductCard';
-import BlogSwiper from '@/components/BlogSwiper';
-import CountdownTimer from '@/components/CountdownTimer';
-import Footer from '@/components/Footer';
+"use client";
+import Header from '@/components/home/Header';
+import HeroSwiper from '@/components/home/HeroSwiper';
+import CategoriesSwiper from '@/components/home/CategoriesSwiper';
+import ProductCard from '@/components/home/ProductCard';
+import BlogSwiper from '@/components/home/BlogSwiper';
+import CountdownTimer from '@/components/home/CountdownTimer';
+import Footer from '@/components/home/Footer';
 import { newProducts } from '@/data/dummy';
+import React from 'react';
+import { useEffect } from 'react';
 
 export default function Home() {
+
   return (
     <>
       <Header />
@@ -155,10 +159,11 @@ export default function Home() {
           </div>
         </div>
 
-        <BlogSwiper />
+        <BlogSwiper />  
       </main>
       
       <Footer />
     </>
   );
+
 }

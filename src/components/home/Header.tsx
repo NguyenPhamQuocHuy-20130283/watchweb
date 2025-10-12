@@ -4,13 +4,41 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Heart, ShoppingCart, User } from 'lucide-react';
 
+import{titleCategories} from '@/data/dummy';
+import { useRouter } from 'next/navigation';
+import { useCartContext } from '@/contexts/CartContext';
+import { useCartStore } from '@/hooks/useCartStore';
+
+
 export default function Header() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const[filteredCategories, setFilteredCategories] = useState(titleCategories);
+  const {getItemCount} = useCartContext();
+  const cartItemCount = useCartStore((state) => state.items.length);
 
   const closeSidebars = () => {
     setIsMobileNavOpen(false);
     setIsCategoriesOpen(false);
+  };
+    const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/products/search?q=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+   const handleCategorySearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
+    
+    const filtered = titleCategories.filter(category => 
+      category.title.toLowerCase().includes(term)
+    );
+    setFilteredCategories(filtered);
   };
 
   return (
@@ -46,14 +74,22 @@ export default function Header() {
           </div>
           
           <div className="gap-4 flex flex-col sm:flex-row w-full items-center justify-between p-6 md:px-24">
-            <h1 className="font-semibold text-4xl text-gray-600">Anon</h1>
-            <form className="relative w-full sm:w-3/5">
-              <input
-                className="w-full h-full p-2 border rounded-xl"
-                placeholder="Enter Your Product Name..."
-                type="text"
-              />
-            </form>
+            <a href='/home' className="logo text-3xl font-bold text-red-400">
+              WatchWeb
+            </a>
+            {/* Search Bar */}
+   <form onSubmit={handleSearch} className="relative w-full sm:w-3/5">
+          <input
+            className="w-full h-full p-2 border rounded-xl"
+            placeholder="Enter Your Product Name..."
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button type="submit" className="absolute right-2 top-2 cursor-pointer">
+            <span>🔍</span>
+          </button>
+        </form>
             <div className="icons hidden mr-2 text-3xl md:flex gap-6 text-gray-600">
               <div className="relative cursor-pointer hover:bg-gray-300 p-1 rounded-full transition-all">
                 <span>
@@ -66,10 +102,12 @@ export default function Header() {
                   <Heart size={35}/>
                 </span>
               </div>
-              <div className="relative cursor-pointer hover:bg-gray-300 p-1 rounded-full transition-all">
-                <span className="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full">0</span>
-                <span><ShoppingCart size={35}/></span>
-              </div>
+              <Link href="/cart" className="relative cursor-pointer hover:bg-gray-300 p-1 rounded-full transition-all">
+                <span className="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full">{cartItemCount}</span>
+                <span>
+                  <ShoppingCart size={35}/>
+                </span>
+              </Link>
             </div>
           </div>
         </div>
@@ -82,7 +120,7 @@ export default function Header() {
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
             </li>
             <li className="nav_items relative category_nav_item">
-              <a href="#Categories">CATEGORIES</a>
+              <a href="/products">CATEGORIES</a>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
 
               <ul
@@ -141,7 +179,7 @@ export default function Header() {
             </li>
 {/* Men’s dropdown */}
 <li className="nav_items relative men_nav_item">
-  <Link href="#Men">MEN&apos;S</Link>
+  <Link href="/products/men">MEN&apos;S</Link>
   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-400 transition-all ease-in-out"></span>
   <ul className="hoveredItems hidden absolute top-10 bg-white shadow-lg rounded-xl flex-col p-4 gap-2 text-gray-400 w-48">
     <li><Link href="#">Shirts</Link></li>
@@ -254,34 +292,45 @@ export default function Header() {
         )}
 
         {/* Mobile Categories Sidebar */}
-        {isCategoriesOpen && (
-          <div className="fixed top-0 left-0 w-80 h-screen bg-white p-6 shadow-lg flex flex-col justify-start gap-4 font-semibold overflow-auto z-30">
-            <div className="w-full flex items-center justify-between">
-              <h1 className="text-lg font-semibold mb-4">CATEGORY</h1>
-              <button className="closeButton text-xl hover:text-red-500" onClick={closeSidebars}>
-                ✖️
-              </button>
-            </div>
-            <div className="border-b pb-3 text-lg text-gray-600">
-              <details>
-                <summary>
-                  <div className="flex items-center gap-2">
-                    Clothes
-                    <span>👗</span>
-                  </div>
-                </summary>
-                <div className="flex justify-between items-baseline text-sm">
-                  <Link href="#" onClick={closeSidebars}>Shirt</Link>
-                  <span>300</span>
+    {isCategoriesOpen && (
+      <div className="fixed top-0 left-0 w-80 h-screen bg-white p-6 shadow-lg flex flex-col justify-start gap-4 font-semibold overflow-auto z-30">
+        <div className="w-full flex items-center justify-between">
+          <h1 className="text-lg font-semibold mb-4">CATEGORY</h1>
+          <button className="closeButton text-xl hover:text-red-500" onClick={closeSidebars}>
+            ✖️
+          </button>
+        </div>
+        
+        {/* Add search input */}
+        <input
+          type="text"
+          placeholder="Search categories..."
+          value={searchTerm}
+          onChange={handleCategorySearch}
+          className="w-full p-2 border rounded-lg mb-4"
+        />
+
+        {/* Filtered categories */}
+        {filteredCategories.map((category, index) => (
+          <div key={index} className="border-b pb-3 text-lg text-gray-600">
+            <details>
+              <summary>
+                <div className="flex items-center gap-2">
+                  {category.title}
+                  <span>{category.icon}</span>
                 </div>
-                <div className="flex justify-between items-baseline text-sm">
-                  <Link href="#" onClick={closeSidebars}>Shorts & Jeans</Link>
-                  <span>30</span>
-                </div>
-              </details>
-            </div>
+              </summary>
+              <div className="flex justify-between items-baseline text-sm">
+                <Link href="#" onClick={closeSidebars}>
+                  {category.title}
+                </Link>
+                <span>{category.count}</span>
+              </div>
+            </details>
           </div>
-        )}
+        ))}
+      </div>
+    )}
       </header>
     </>
   );

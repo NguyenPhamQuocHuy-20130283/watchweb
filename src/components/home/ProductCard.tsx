@@ -7,7 +7,9 @@ interface ProductCardProps {
   product: Product;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+
+export default  function ProductCard({ product }: ProductCardProps) {
+
   return (
     <div className="product_pic cursor-pointer overflow-hidden flex flex-col gap-2 p-4 w-full h-92 border shadow-md bg-white rounded-lg relative">
       {product.present && (
@@ -21,6 +23,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           🛍️
         </div>
       </div>
+      
       
       <div className="w-full h-1/2 mb-2 relative">
         <div 
@@ -50,8 +53,11 @@ export default function ProductCard({ product }: ProductCardProps) {
       
       <div className="flex items-center justify-start gap-4 font-semibold text-sm">
         <strong>{product.taxPrice}</strong>
-        <s className="text-gray-500">{product.productPrice}</s>
+        <s className="text-gray-500">${product.productPrice}</s>
       </div>
+ 
+      
     </div>
+
   );
 }

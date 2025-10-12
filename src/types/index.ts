@@ -20,11 +20,26 @@ export interface BlogPost {
 }
 
 export interface Product {
+  id: number;
   present: string;
   productPic: string;
   productHover: string;
   productName: string;
   productInfo: string;
-  productPrice: string;
+  productPrice: number;
   taxPrice: string;
+  sizes: string[];
+  color: string[];
+  brand: string;
+  category?: string;
+}
+export interface CartItem {
+  id: number;
+  productName: string;
+  productInfo: string;
+  productPic: string;
+  price: number;
+  quantity: number;
+  size?: string;
+  color?: string;
 }
