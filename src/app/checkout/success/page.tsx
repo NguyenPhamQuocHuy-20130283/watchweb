@@ -20,18 +20,6 @@ export default function CheckoutSuccessPage() {
       router.push('/');
       return;
     }
-
-    const timer = setInterval(() => {
-      setCountdown(prev => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          router.push('/');
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
   }, [orderId, router]);
 
   if (!orderId) return null;

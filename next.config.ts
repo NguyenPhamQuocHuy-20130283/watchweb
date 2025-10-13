@@ -5,15 +5,15 @@ const nextConfig: NextConfig = {
 
   // --- Cấu hình sẵn có của bạn ---
   allowedDevOrigins: ["http://localhost:3000"],
-  redirects: async () => {
-    return [
-      {
-        source: "/",
-        destination: "/home",
-        permanent: true,
-      },
-    ];
-  },
+  // redirects: async () => {
+  //   return [
+  //     {
+  //       source: "/home",
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //   ];
+  // },
   // --- Hết phần cấu hình của bạn ---
 
   // ✅ BẠN CHỈ CẦN THÊM PHẦN `headers` NÀY VÀO
