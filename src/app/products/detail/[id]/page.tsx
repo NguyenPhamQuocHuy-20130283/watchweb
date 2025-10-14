@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import ProductDetailClient from './ProductDetailClient';
 import { newProducts } from '@/data/dummy';
-import { CartProvider } from '@/contexts/CartContext';
 
 interface ProductDetailPageProps {
   params: Promise<{
@@ -28,11 +27,9 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
     .slice(0, 4);
     
   return (
-    <CartProvider>
       <ProductDetailClient 
         productId={productId} 
         relatedProducts={relatedProducts} 
       />
-    </CartProvider>
   );
 }

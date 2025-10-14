@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useCart } from '@/hooks/useCart';
 import Header from '@/components/home/Header';
 import Footer from '@/components/home/Footer';
 import Breadcrumb from '@/components/home/Breadcrumb';
@@ -10,19 +9,20 @@ import CartSummary from '@/components/cart/CartSummary';
 import EmptyCart from '@/components/cart/EmptyCart';
 import RelatedProducts from '@/components/cart/RelatedProducts';
 import { useCartStore } from '@/hooks/useCartStore';
-import Link from 'next/link';
-import { get } from 'http';
+import CustomAlertDialog  from '@/components/ui/CustomAlertDialog';
 import { newProducts } from '@/data/dummy';
 
 export default function CartPage() {
-  const {
-    items,
-    removeItem,
-    updateQuantity,
-    addItem
-
-  } = useCartStore();
-
+ const {
+  items,
+  removeItem,
+  updateQuantity,
+  clearCart, // Lấy hàm clearCart từ store
+  getSubtotal,
+  getTax,
+  getShipping,
+  getTotal,
+ } = useCartStore();
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState<{code: string; discount: number} | null>(null);
 
@@ -43,26 +43,15 @@ export default function CartPage() {
     }
   };
 
-  const clearCart = () => {
-    // Clear all items from cart
-    items.forEach(item => removeItem(item.id));
-  }
-  const getSubtotal = () => {
-    return items.reduce((total, item) => total + (item.price * item.quantity), 0);
-  }
-  const getTax = () => {
-    return getSubtotal() * 0.1; // 10% tax
-  }
-  const getShipping = () => {
-    return getSubtotal() > 50 ? 0 : 5; // Free shipping over $50
-  }
-  const getTotal = () => {
-    return getSubtotal() + getTax() + getShipping() - (appliedCoupon?.discount || 0);
-  }
-    const relatedProducts = newProducts.slice(0, 4);
-
+  const relatedProducts = newProducts.slice(0, 4);
+ const handleClearCartWithConfirmation = () => {
+    const isConfirmed = window.confirm("Are you sure you want to remove all items from your cart?");
+    if (isConfirmed) {
+      clearCart(); // Gọi hàm clearCart từ store
+    }
+  };
   useEffect(() => {
-    console.log(items);
+  console.log("Current cart items:", items);
   }, [items]);
   return (
     <>
@@ -99,12 +88,16 @@ export default function CartPage() {
                   {/* Clear Cart Button */}
                   <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-bold text-gray-800">Cart Items</h2>
-                    <button
-                      onClick={clearCart}
-                      className="text-sm text-red-500 hover:text-red-600 font-semibold"
-                    >
-                      Clear Cart
-                    </button>
+                 <CustomAlertDialog
+                        title="Are you absolutely sure?"
+                        description="This action will permanently remove all items from your shopping cart."
+                        onConfirm={clearCart} // Truyền hàm clearCart từ store vào đây
+                      >
+                        {/* Nút này sẽ là 'children' của component AlertDialog */}
+                        <button className="text-sm text-red-500 hover:text-red-600 font-semibold">
+                          Clear Cart
+                        </button>
+                      </CustomAlertDialog>
                   </div>
 
                   {/* Items List */}
@@ -113,8 +106,8 @@ export default function CartPage() {
                       <CartItem
                         key={`${item.id}-${item.size}-${item.color}-${index}`}
                         item={item}
-                        onRemove={() => removeItem(item.id)}
-                        onUpdateQuantity={(qty) => updateQuantity(item.id, qty)}
+                        onRemove={() => removeItem(item.id, item.size, item.color)}
+                        onUpdateQuantity={(qty) => updateQuantity(item.id, qty, item.size, item.color)}
                         
                       />
                     ))}

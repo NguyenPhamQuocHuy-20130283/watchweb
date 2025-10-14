@@ -2,7 +2,6 @@
 
 import { Product } from '@/types';
 import { useState } from 'react';
-import { useCartContext } from '@/contexts/CartContext';
 import { useCartStore } from '@/hooks/useCartStore';
 
 interface QuickViewProps {
@@ -15,11 +14,10 @@ export default function QuickView({ product, onClose }: QuickViewProps) {
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState('M');
   const [selectedColor, setSelectedColor] = useState('Black');
-  const { addToCart } = useCartContext();
   const { addItem } = useCartStore();
 
   const handleAddToCart = () => {
-    addItem(product);
+    addItem(product, quantity, selectedSize, selectedColor);
     console.log('Added to cart:', product, { quantity, selectedSize, selectedColor });  
     onClose();
   };

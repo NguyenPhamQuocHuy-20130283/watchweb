@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useCartContext } from '@/contexts/CartContext';
 import Header from '@/components/home/Header';
 import Footer from '@/components/home/Footer';
 import Breadcrumb from '@/components/home/Breadcrumb';
@@ -12,6 +11,7 @@ import RelatedProducts from '@/components/cart/RelatedProducts';
 import { newProducts } from '@/data/dummy';
 import { Heart, Share2, GitCompare } from 'lucide-react';
 import { Product } from '@/types';
+import { useCartStore } from '@/hooks/useCartStore';
 
 interface ProductDetailClientProps {
   productId: number;
@@ -39,7 +39,7 @@ export default function ProductDetailClient({ productId, relatedProducts  }: Pro
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
 
-  const { addToCart } = useCartContext();
+  const { addItem } = useCartStore();
 
   const images = [
     product.productPic,
@@ -57,16 +57,7 @@ export default function ProductDetailClient({ productId, relatedProducts  }: Pro
   ];
 
   const handleAddToCart = () => {
-    addToCart({
-      id: productId,
-      productName: product.productName,
-      productInfo: product.productInfo,
-      productPic: product.productPic,
-      price: parseFloat(product.taxPrice.replace('$', '')),
-      size: selectedSize,
-      color: selectedColor,
-      quantity: quantity,
-    });
+    addItem(product, quantity, selectedSize, selectedColor);
     alert('✓ Added to cart!');
   };
 

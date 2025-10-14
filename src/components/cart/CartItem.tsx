@@ -3,6 +3,7 @@
 import { CartItem as CartItemType } from '@/types';
 import { Trash2 } from 'lucide-react';
 import Link from 'next/link';
+import CustomAlertDialog from '../ui/CustomAlertDialog';
 
 interface CartItemProps {
   item: CartItemType;
@@ -87,13 +88,18 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemP
         </div>
 
         {/* Remove Button */}
+          <CustomAlertDialog
+                               title="Are you absolutely sure?"
+                               description="This action will permanently remove all items from your shopping cart."
+                               onConfirm={() => onRemove()} // Truyền hàm clearCart từ store vào đây
+                             >
         <button
-          onClick={onRemove}
           className="text-red-500 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors"
           title="Remove item"
         >
           <Trash2 size={20} />
         </button>
+        </CustomAlertDialog>
       </div>
     </div>
   );

@@ -2,60 +2,77 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Heart, ShoppingCart, User } from 'lucide-react';
-
-import{titleCategories} from '@/data/dummy';
+import { 
+  Heart, 
+  ShoppingCart, 
+  User, 
+  LogOut, 
+  LayoutDashboard, 
+  ShoppingBag 
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useCartContext } from '@/contexts/CartContext';
 import { useCartStore } from '@/hooks/useCartStore';
-
+import { useAuthContext } from '@/contexts/AuthContext';
+import { titleCategories } from '@/data/dummy';
 
 export default function Header() {
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
 
+  // Search and UI states
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const[filteredCategories, setFilteredCategories] = useState(titleCategories);
-  const {getItemCount} = useCartContext();
+  const [filteredCategories, setFilteredCategories] = useState(titleCategories);
+
+  // Auth and Cart states
+  const { isAuthenticated, user, logout } = useAuthContext();
   const cartItemCount = useCartStore((state) => state.items.length);
 
-  const closeSidebars = () => {
-    setIsMobileNavOpen(false);
-    setIsCategoriesOpen(false);
-  };
-    const handleSearch = (e: React.FormEvent) => {
+  // Handlers
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/products/search?q=${encodeURIComponent(searchQuery)}`);
     }
   };
-   const handleCategorySearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleLogout = () => {
+    logout();
+    setIsUserMenuOpen(false);
+    router.push('/');
+  };
+
+  const handleCategorySearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
-    
-    const filtered = titleCategories.filter(category => 
-      category.title.toLowerCase().includes(term)
+    const filtered = titleCategories.filter((c) =>
+      c.title.toLowerCase().includes(term)
     );
     setFilteredCategories(filtered);
   };
 
+  const closeSidebars = () => {
+    setIsMobileNavOpen(false);
+    setIsCategoriesOpen(false);
+  };
+
   return (
     <>
-      <header className="header w-full">
+      <header className="header w-full bg-white shadow-sm sticky top-0 z-50">
         {/* Top Header */}
         <div className="top-header w-screen flex flex-col items-center justify-between border-b border-gray-300">
           <div className="flex w-full items-center justify-between p-4 md:px-20 border-b border-gray-300">
             <div className="icons hidden lg:flex items-center gap-2">
-              <Link href="#" className="text-gray-700 bg-gray-300/50 p-1 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center transition-all">
-                <span className="text-xl">📷</span>
+              <Link href="#" className="text-gray-700 bg-gray-300/50 p-1 rounded-md hover:bg-red-400 hover:text-white transition-all">
+                📷
               </Link>
-              <Link href="#" className="text-gray-700 bg-gray-300/50 p-1 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center transition-all">
-                <span className="text-xl">💼</span>
+              <Link href="#" className="text-gray-700 bg-gray-300/50 p-1 rounded-md hover:bg-red-400 hover:text-white transition-all">
+                💼
               </Link>
-              <Link href="#" className="text-gray-700 bg-gray-300/50 p-1 rounded-md hover:scale-110 hover:text-white hover:bg-red-400 flex items-center justify-center transition-all">
-                <span className="text-xl">🔗</span>
+              <Link href="#" className="text-gray-700 bg-gray-300/50 p-1 rounded-md hover:bg-red-400 hover:text-white transition-all">
+                🔗
               </Link>
             </div>
             <h3 className="text-gray-400 font-semibold text-xs">
@@ -72,41 +89,117 @@ export default function Header() {
               </select>
             </div>
           </div>
-          
+
+          {/* Middle Header */}
           <div className="gap-4 flex flex-col sm:flex-row w-full items-center justify-between p-6 md:px-24">
-            <a href='/home' className="logo text-3xl font-bold text-red-400">
+            <Link href="/" className="logo text-3xl font-bold text-red-500">
               WatchWeb
-            </a>
+            </Link>
+
             {/* Search Bar */}
-   <form onSubmit={handleSearch} className="relative w-full sm:w-3/5">
-          <input
-            className="w-full h-full p-2 border rounded-xl"
-            placeholder="Enter Your Product Name..."
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button type="submit" className="absolute right-2 top-2 cursor-pointer">
-            <span>🔍</span>
-          </button>
-        </form>
-            <div className="icons hidden mr-2 text-3xl md:flex gap-6 text-gray-600">
-              <div className="relative cursor-pointer hover:bg-gray-300 p-1 rounded-full transition-all">
-                <span>
-                  <User size={35}/>
-                </span>
+            <form onSubmit={handleSearch} className="relative w-full sm:w-3/5">
+              <input
+                className="w-full h-full p-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500"
+                placeholder="Enter Your Product Name..."
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button type="submit" className="absolute right-3 top-2 text-gray-400">
+                🔍
+              </button>
+            </form>
+
+            {/* Icons */}
+            <div className="icons hidden text-3xl md:flex gap-6 text-gray-600 items-center">
+              {/* User Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="cursor-pointer hover:bg-gray-200 p-2 rounded-full transition-all"
+                >
+                  {isAuthenticated && user?.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt="User Avatar"
+                      className="w-8 h-8 rounded-full"
+                    />
+                  ) : (
+                    <User size={28} />
+                  )}
+                </button>
+
+                {isUserMenuOpen && (
+                  <div
+                    className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl py-2 z-50"
+                    onMouseLeave={() => setIsUserMenuOpen(false)}
+                  >
+                    {isAuthenticated && user ? (
+                      <>
+                        <div className="px-4 py-2 border-b">
+                          <p className="font-bold text-sm text-gray-800">{`${user.firstName} ${user.lastName}`}</p>
+                          <p className="text-xs text-gray-500">{user.email}</p>
+                        </div>
+                        <Link
+                          href="/account/profile"
+                          className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          <LayoutDashboard size={16} /> My Profile
+                        </Link>
+                        <Link
+                          href="/account/orders"
+                          className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          <ShoppingBag size={16} /> My Orders
+                        </Link>
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          <LogOut size={16} /> Logout
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          href="/auth/login"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          Sign In
+                        </Link>
+                        <Link
+                          href="/auth/register"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          Sign Up
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
-              <div className="relative cursor-pointer hover:bg-gray-300 p-1 rounded-full transition-all">
-                <span className="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full">0</span>
-                <span>
-                  <Heart size={35}/>
+
+              {/* Wishlist */}
+              <div className="relative cursor-pointer hover:bg-gray-200 p-2 rounded-full transition-all">
+                <span className="text-xs text-center font-semibold text-white absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full">
+                  0
                 </span>
+                <Heart size={28} />
               </div>
-              <Link href="/cart" className="relative cursor-pointer hover:bg-gray-300 p-1 rounded-full transition-all">
-                <span className="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-4 h-4 bg-red-400 rounded-full">{cartItemCount}</span>
-                <span>
-                  <ShoppingCart size={35}/>
+
+              {/* Cart */}
+              <Link
+                href="/cart"
+                className="relative cursor-pointer hover:bg-gray-200 p-2 rounded-full transition-all"
+              >
+                <span className="text-xs text-center font-semibold text-white absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full">
+                  {cartItemCount}
                 </span>
+                <ShoppingCart size={28} />
               </Link>
             </div>
           </div>

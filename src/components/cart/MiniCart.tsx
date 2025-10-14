@@ -1,13 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { useCartContext } from '@/contexts/CartContext';
 import Link from 'next/link';
 import { ShoppingCart, X, Trash2 } from 'lucide-react';
+import { useCartStore } from '@/hooks/useCartStore';
 
 export default function MiniCart() {
   const [isOpen, setIsOpen] = useState(false);
-  const { items, removeFromCart, getItemCount, getSubtotal } = useCartContext();
+  const { items, removeItem, getTotalItems, getSubtotal } = useCartStore();
 
   return (
     <>
@@ -16,9 +16,9 @@ export default function MiniCart() {
         onClick={() => setIsOpen(true)}
         className="relative cursor-pointer hover:bg-gray-300 p-1 rounded-full transition-all"
       >
-        {getItemCount() > 0 && (
+        {getTotalItems() > 0 && (
           <span className="text-xs text-center font-semibold text-white absolute -top-2 -right-2 w-5 h-5 bg-red-400 rounded-full flex items-center justify-center">
-            {getItemCount()}
+            {getTotalItems()}
           </span>
         )}
         <ShoppingCart size={35} />
@@ -38,7 +38,7 @@ export default function MiniCart() {
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b">
               <h2 className="text-lg font-bold text-gray-800">
-                Shopping Cart ({getItemCount()})
+                Shopping Cart ({getTotalItems()})
               </h2>
               <button
                 onClick={() => setIsOpen(false)}
@@ -91,7 +91,7 @@ export default function MiniCart() {
                         </div>
                       </div>
                       <button
-                        onClick={() => removeFromCart(item.id, item.size, item.color)}
+                        onClick={() => removeItem(item.id, item.size, item.color)}
                         className="text-gray-400 hover:text-red-500 transition-colors"
                       >
                         <Trash2 size={18} />

@@ -5,15 +5,15 @@ const nextConfig: NextConfig = {
 
   // --- Cấu hình sẵn có của bạn ---
   allowedDevOrigins: ["http://localhost:3000"],
-  // redirects: async () => {
-  //   return [
-  //     {
-  //       source: "/home",
-  //       destination: "/",
-  //       permanent: false,
-  //     },
-  //   ];
-  // },
+  redirects: async () => {
+    return [
+      {
+        source: "/r",
+        destination: "/roadmap",
+        permanent: false,
+      },
+    ];
+  },
   // --- Hết phần cấu hình của bạn ---
 
   // ✅ BẠN CHỈ CẦN THÊM PHẦN `headers` NÀY VÀO
@@ -22,7 +22,7 @@ const nextConfig: NextConfig = {
       default-src 'self';
       script-src 'self' 'unsafe-eval' 'unsafe-inline';
       style-src 'self' 'unsafe-inline';
-      img-src 'self' blob: data:;
+      img-src 'self' blob: data: ui-avatars.com;
       font-src 'self';
       object-src 'none';
       base-uri 'self';

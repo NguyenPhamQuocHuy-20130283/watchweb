@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useCartContext } from '@/contexts/CartContext';
 import { useCartStore } from '@/hooks/useCartStore';
 import Header from '@/components/home/Header';
 import Footer from '@/components/home/Footer';
@@ -22,10 +21,22 @@ export default function CheckoutPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
-
+interface ShippingData {
+  email: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  apartment: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+  phone: string;
+  saveInfo?: boolean; // ✅ The '?' goes here, in the TYPE definition.
+}
   
   // Form data states
-  const [shippingData, setShippingData] = useState({
+  const [shippingData, setShippingData] = useState<ShippingData>({
     email: '',
     firstName: '',
     lastName: '',
@@ -53,6 +64,12 @@ export default function CheckoutPage() {
       setIsHydrated(true);
     });
     setIsHydrated(useCartStore.persist.hasHydrated());
+      const savedInfoJSON = localStorage.getItem('shippingInfo');
+  
+  if (savedInfoJSON) {
+    const savedInfo = JSON.parse(savedInfoJSON);
+    setShippingData({ ...savedInfo, saveInfo: true });
+  }
 
     // Dọn dẹp listener khi component unmount
     return () => {
@@ -74,6 +91,15 @@ if (items.length === 0 && !isProcessing) {
 
 
   const handleShippingSubmit = (data: typeof shippingData) => {
+    console.log('Shipping data submitted:', data);
+    // save shipping data to local store
+      if (data.saveInfo) {
+    const dataToSave = { ...data };
+    delete dataToSave.saveInfo;
+    localStorage.setItem('shippingInfo', JSON.stringify(dataToSave));
+  } else {
+    localStorage.removeItem('shippingInfo');
+  }
     setShippingData(data);
     setCurrentStep(2);
   };
