@@ -7,7 +7,7 @@ import Header from "@/components/home/Header";
 export default function OrdersPage() {
     return (
       <>
-        <Header />
+  
           <div>
             <h1 className="text-3xl font-bold text-gray-800 mb-6">My Orders</h1>
             <div className="bg-white p-6 rounded-lg shadow-md">
@@ -15,7 +15,7 @@ export default function OrdersPage() {
                 {/* Thêm danh sách đơn hàng tại đây */}
             </div>
         </div>
-        <Footer />
+
       </>
     );
 }

@@ -26,9 +26,8 @@ export default function CheckoutSuccessPage() {
 
   return (
     <>
-      <Header />
-      
-      <main className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 py-16">
+
+
         <div className="max-w-3xl mx-auto px-8">
           {/* Success Animation */}
           <div className="text-center mb-8">
@@ -140,9 +139,7 @@ export default function CheckoutSuccessPage() {
             </div>
           </div>
         </div>
-      </main>
-      
-      <Footer />
+
     </>
   );
 }

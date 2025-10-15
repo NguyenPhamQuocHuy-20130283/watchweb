@@ -26,11 +26,16 @@ export default function ProductDetailClient({ productId, relatedProducts  }: Pro
   if (!product) {
     return (
       <>
-        <Header />
         <main className="min-h-screen flex items-center justify-center">
           <h1 className="text-2xl font-bold">Product not found!</h1>
+          {/* button back to list */}
+          <button
+            onClick={() => window.location.href = '/products'}
+            className="ml-4 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors"
+          >
+          List products
+          </button>
         </main>
-        <Footer />
       </>
     );
   }
@@ -58,15 +63,11 @@ export default function ProductDetailClient({ productId, relatedProducts  }: Pro
 
   const handleAddToCart = () => {
     addItem(product, quantity, selectedSize, selectedColor);
-    alert('✓ Added to cart!');
   };
 
   return (
     <>
-      <Header />
-      
-      <main className="min-h-screen bg-gray-50 pb-24 lg:pb-0">
-        {/* Breadcrumb */}
+ 
         <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto pt-6">
           <Breadcrumb 
             items={[
@@ -282,9 +283,7 @@ export default function ProductDetailClient({ productId, relatedProducts  }: Pro
           {/* Related Products */}
           <RelatedProducts products={relatedProducts} />
         </div>
-      </main>
-      
-      <Footer />
+
     </>
   );
 }

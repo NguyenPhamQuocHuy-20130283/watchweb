@@ -43,29 +43,26 @@ export default function ProductsPage() {
 
   return (
     <>
-      <Header />
-      
-      <main className="min-h-screen bg-gray-50 pb-24 lg:pb-0">
         {/* Breadcrumb */}
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto pt-6">
+  
           <Breadcrumb 
             items={[
               { label: 'Home', href: '/' },
               { label: 'Products', href: '/products' }
             ]} 
           />
-        </div>
+
 
         {/* Page Title */}
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto mt-6">
+
           <h1 className="text-3xl font-bold text-gray-800">All Products</h1>
           <p className="text-gray-600 mt-2">
             Showing {startIndex + 1}-{Math.min(endIndex, newProducts.length)} of {newProducts.length} results
           </p>
-        </div>
+
 
         {/* Main Content */}
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto mt-8 mb-20">
+        <div className="mb-20">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Sidebar - Desktop Only */}
             <aside className="hidden lg:block w-full lg:w-1/4">
@@ -149,7 +146,7 @@ export default function ProductsPage() {
             </div>
           </div>
         </div>
-      </main>
+
 
       {/* Mobile Filters */}
      <MobileFilters 
@@ -168,7 +165,6 @@ export default function ProductsPage() {
         />
       )}
       
-      <Footer />
     </>
   );
 }

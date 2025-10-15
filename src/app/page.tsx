@@ -14,14 +14,12 @@ export default function Home() {
 
   return (
     <>
-      <Header />
-      
-      <main>
+
         <HeroSwiper />
         <CategoriesSwiper />
         
         {/* Products Section */}
-        <section className="w-full min-h-auto px-8 lg:px-0 lg:w-5/6 mx-auto mt-16 flex gap-8">
+        <section className="mt-16 flex gap-8">
           <div className="products w-full flex flex-col">
             {/* Deal of the Day */}
             <div className="day my-10">
@@ -65,7 +63,7 @@ export default function Home() {
               <h1 className="font-semibold text-xl border-b py-4 mb-6 text-center">New Products</h1>
               <div className="newProducts grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {newProducts.map((product, index) => (
-                  <ProductCard key={index} product={product} />
+                  <ProductCard key={index} product={product} href={`/products/detail/${product.id}`} />
                 ))}
               </div>
             </div>
@@ -73,7 +71,7 @@ export default function Home() {
         </section>
 
         {/* Testimonial & Services */}
-        <div className="mt-10 w-full px-8 lg:px-0 lg:w-5/6 mx-auto flex flex-wrap lg:flex-nowrap flex-col lg:flex-row gap-8 mb-20">
+        <div className="mt-10 flex flex-wrap lg:flex-nowrap flex-col lg:flex-row gap-8 mb-20">
           <div className="testimonial w-full lg:w-2/6">
             <h1 className="text-xl font-semibold border-b pb-4 mb-8">Testimonial</h1>
             <div className="w-full border rounded-xl flex flex-col items-center justify-center p-8 h-96 bg-white">
@@ -160,9 +158,7 @@ export default function Home() {
         </div>
 
         <BlogSwiper />  
-      </main>
-      
-      <Footer />
+
     </>
   );
 

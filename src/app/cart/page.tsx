@@ -55,32 +55,28 @@ export default function CartPage() {
   }, [items]);
   return (
     <>
-      <Header />
-      
-      <main className="min-h-screen bg-gray-50 pb-24 lg:pb-0">
-        {/* Breadcrumb */}
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto pt-6">
+
+
           <Breadcrumb 
             items={[
               { label: 'Home', href: '/' },
               { label: 'Shopping Cart', href: '/cart' }
             ]} 
           />
-        </div>
+      
 
-        {/* Page Title */}
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto mt-6">
+    
           <h1 className="text-3xl font-bold text-gray-800">Shopping Cart</h1>
           <p className="text-gray-600 mt-2">
             {items.length} {items.length === 1 ? 'item' : 'items'} in your cart
           </p>
-        </div>
+     
 
         {/* Cart Content */}
         {items.length === 0 ? (
           <EmptyCart />
         ) : (
-          <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto mt-8 mb-20">
+          <div className="mb-20">
             <div className="flex flex-col lg:flex-row gap-8">
               {/* Cart Items */}
               <div className="w-full lg:w-2/3">
@@ -195,9 +191,7 @@ export default function CartPage() {
             <RelatedProducts products={relatedProducts} />
           </div>
         )}
-      </main>
-      
-      <Footer />
+
     </>
   );
 }

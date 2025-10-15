@@ -127,11 +127,8 @@ if (items.length === 0 && !isProcessing) {
 
   return (
     <>
-      <Header />
-      
-      <main className="min-h-screen bg-gray-50 pb-24 lg:pb-0">
-        {/* Breadcrumb */}
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto pt-6">
+
+
           <Breadcrumb 
             items={[
               { label: 'Home', href: '/' },
@@ -139,10 +136,8 @@ if (items.length === 0 && !isProcessing) {
               { label: 'Checkout', href: '/checkout' }
             ]} 
           />
-        </div>
+     
 
-        {/* Page Title */}
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto mt-6">
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-bold text-gray-800">Checkout</h1>
             <div className="flex items-center gap-2 text-green-600">
@@ -150,15 +145,15 @@ if (items.length === 0 && !isProcessing) {
               <span className="text-sm font-semibold">Secure Checkout</span>
             </div>
           </div>
-        </div>
+     
 
         {/* Checkout Steps */}
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto mt-8">
+        <div className="mt-8">
           <CheckoutSteps currentStep={currentStep} />
         </div>
 
         {/* Checkout Content */}
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto mt-8 mb-20">
+        <div className="mb-20">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left: Checkout Form */}
             <div className="lg:col-span-2">
@@ -247,9 +242,7 @@ if (items.length === 0 && !isProcessing) {
             </div>
           </div>
         </div>
-      </main>
-      
-      <Footer />
+
     </>
   );
 }

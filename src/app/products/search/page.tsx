@@ -97,21 +97,16 @@ export default function SearchPage() {
 
   return (
     <>
-      <Header />
-      
-      <main className="min-h-screen bg-gray-50 pb-24 lg:pb-0">
-        {/* Breadcrumb */}
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto pt-6">
+
           <Breadcrumb 
             items={[
               { label: 'Home', href: '/' },
               { label: 'Search Results', href: `/products/search?q=${query}` }
             ]} 
           />
-        </div>
 
-        {/* Page Title */}
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto mt-6">
+
+
           <h1 className="text-3xl font-bold text-gray-800">
             Search Results for "{query}"
           </h1>
@@ -121,10 +116,10 @@ export default function SearchPage() {
               ` (${filteredProducts.length} after filters)`
             }
           </p>
-        </div>
+
 
         {/* Main Content with Sidebar */}
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto mt-8 mb-20">
+        <div className="mb-20">
           <div className="flex flex-col lg:flex-row gap-8">
             {/* Sidebar - Desktop Only */}
             <aside className="hidden lg:block w-full lg:w-1/4">
@@ -166,7 +161,7 @@ export default function SearchPage() {
                     : 'flex flex-col gap-6'
                 }>
                   {currentProducts.map((product, index) => (
-                    <ProductCard key={index} product={product} />
+                    <ProductCard key={index} product={product} href={`/products/detail/${product.id}`} />
                   ))}
                 </div>
               )}
@@ -221,7 +216,7 @@ export default function SearchPage() {
             </div>
           </div>
         </div>
-      </main>
+
 
       {/* Mobile Filters */}
       <MobileFilters 
@@ -231,8 +226,6 @@ export default function SearchPage() {
         onClearFilters={handleClearAllFilters}
         isActive={isActive}
       />
-      
-      <Footer />
     </>
   );
 }

@@ -2,16 +2,28 @@
 
 import { Product } from '@/types';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+
 
 interface ProductCardProps {
   product: Product;
+  href?: string;
 }
 
 
-export default  function ProductCard({ product }: ProductCardProps) {
+
+export default  function ProductCard({ product, href }: ProductCardProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (href) {
+      router.push(href);
+    }
+  };
 
   return (
-    <div className="product_pic cursor-pointer overflow-hidden flex flex-col gap-2 p-4 w-full h-92 border shadow-md bg-white rounded-lg relative">
+    <div onClick={handleClick}
+     className="product_pic cursor-pointer overflow-hidden flex flex-col gap-2 p-4 w-full h-92 border shadow-md bg-white rounded-lg relative">
       {product.present && (
         <div className="z-10 tax absolute top-2 left-2 bg-green-600 text-white text-sm font-bold border rounded-md px-2 py-1">
           {product.present}

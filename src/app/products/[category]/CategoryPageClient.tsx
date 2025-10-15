@@ -96,9 +96,7 @@ export default function CategoryPageClient({ category }: CategoryPageClientProps
 
   return (
     <>
-      <Header />
-      
-      <main className="min-h-screen bg-gray-50 pb-24 lg:pb-0">
+
         <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto pt-6">
           <Breadcrumb 
             items={[
@@ -116,7 +114,7 @@ export default function CategoryPageClient({ category }: CategoryPageClientProps
           </p>
         </div>
 
-        <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto mt-8 mb-20">
+        <div className="mb-20">
           <div className="flex flex-col lg:flex-row gap-8">
             <aside className="hidden lg:block w-full lg:w-1/4">
               <ProductSidebar 
@@ -194,7 +192,7 @@ export default function CategoryPageClient({ category }: CategoryPageClientProps
             </div>
           </div>
         </div>
-      </main>
+ 
 
       <MobileFilters 
         filters={filters}
@@ -204,7 +202,7 @@ export default function CategoryPageClient({ category }: CategoryPageClientProps
         isActive={isActive}
       />
       
-      <Footer />
+
     </>
   );
 }

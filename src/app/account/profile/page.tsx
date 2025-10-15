@@ -7,7 +7,6 @@ import Header from "@/components/home/Header";
 export default function ProfilePage() {
     return (
     <>
-        <Header />
             <div>
             <h1 className="text-3xl font-bold text-gray-800 mb-6">My Profile</h1>
             <div className="bg-white p-6 rounded-lg shadow-md">
@@ -15,7 +14,6 @@ export default function ProfilePage() {
                 {/* Thêm form chỉnh sửa thông tin tại đây */}
             </div>
         </div>
-        <Footer />
     </>
     );
 }

@@ -76,14 +76,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-blue-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <Link href="/">
-            <h1 className="text-4xl font-bold text-red-500 mb-2">WatchWeb</h1>
-          </Link>
-          <p className="text-gray-600">Sign in to your account</p>
-        </div>
-
         {/* Login Form */}
         <div className="bg-white rounded-lg shadow-xl p-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Welcome Back!</h2>

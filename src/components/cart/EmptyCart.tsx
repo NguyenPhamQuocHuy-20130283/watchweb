@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function EmptyCart() {
   return (
-    <div className="w-full px-8 lg:px-0 lg:w-5/6 mx-auto mt-16 mb-20">
+    <div className="mb-20">
       <div className="bg-white rounded-lg shadow-md p-12 text-center">
         <div className="text-8xl mb-6">🛒</div>
         <h2 className="text-3xl font-bold text-gray-800 mb-4">Your Cart is Empty</h2>

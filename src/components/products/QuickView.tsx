@@ -3,6 +3,7 @@
 import { Product } from '@/types';
 import { useState } from 'react';
 import { useCartStore } from '@/hooks/useCartStore';
+import { ShoppingCart } from 'lucide-react';
 
 interface QuickViewProps {
   product: Product;
@@ -21,6 +22,9 @@ export default function QuickView({ product, onClose }: QuickViewProps) {
     console.log('Added to cart:', product, { quantity, selectedSize, selectedColor });  
     onClose();
   };
+  const handleDetail = () => {
+    window.location.href = `/products/detail/${product.id}`;
+  }
 
  
   const sizes = product.sizes || ['S', 'M', 'L', 'XL'];
@@ -160,14 +164,14 @@ export default function QuickView({ product, onClose }: QuickViewProps) {
 
             {/* Actions */}
             <div className="flex gap-3 mt-8">
-              <button className="flex-1 bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition-colors font-semibold" onClick={handleAddToCart}>
-                Add to Cart
+              <button className="flex-1 bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition-colors font-semibold" onClick={handleDetail}>
+                Click for detail
               </button>
               <button className="w-12 h-12 border rounded-lg hover:bg-gray-100 flex items-center justify-center">
                 ❤️
               </button>
-              <button className="w-12 h-12 border rounded-lg hover:bg-gray-100 flex items-center justify-center">
-                🔄
+              <button className="w-12 h-12 border rounded-lg hover:bg-gray-100 flex items-center justify-center" onClick={handleAddToCart}>
+                <ShoppingCart size={20} />
               </button>
             </div>
 
