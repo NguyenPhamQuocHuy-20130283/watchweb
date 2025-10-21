@@ -1,19 +1,29 @@
-'use client';
+"use client";
 
-import Footer from "@/components/home/Footer";
-import Header from "@/components/home/Header";
+import ProfileForm from "@/components/account/ProfileForm";
+import ChangePasswordForm from "@/components/account/ChangePasswordForm";
+import { useAuthContext } from "@/contexts/AuthContext";
+import LoadingSkeleton from "@/components/products/LoadingSkeleton";
 
-// Một trang Profile đơn giản để ví dụ
 export default function ProfilePage() {
+  const { isLoading: isAuthLoading } = useAuthContext();
+
+  // Có thể thêm skeleton loading ở đây nếu muốn
+  if (isAuthLoading) {
     return (
-    <>
-            <div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-6">My Profile</h1>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-                <p>User profile information will be displayed and editable here.</p>
-                {/* Thêm form chỉnh sửa thông tin tại đây */}
-            </div>
-        </div>
-    </>
+      <div className="max-w-2xl mx-auto">
+        <LoadingSkeleton />
+      </div>
     );
+  }
+
+  return (
+    <div className="max-w-2xl mx-auto space-y-8">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+        My Profile
+      </h1>
+      <ProfileForm />
+      <ChangePasswordForm />
+    </div>
+  );
 }
